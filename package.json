@@ -1,0 +1,19 @@
+{
+  "name": "gl02_cyberpunk",
+  "version": "1.0.0",
+  "description": "Projet GL02 - CLI Cyberpunk",
+  "main": "src/index.js",
+  "bin": {
+    "cyberpunk": "./src/cli.js"
+  },
+  "scripts": {
+    "start": "node src/cli.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["cli", "cyberpunk", "gl02"],
+  "author": "GRIDEL Alexis, DOSNE Gabriel, BRUN Pauline, MSALLEM Fatma",
+  "license": "ISC",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
