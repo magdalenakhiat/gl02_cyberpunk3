@@ -1,4 +1,5 @@
 import pkg from "@caporal/core";
+import helloAction from "./action/helloAction.js";
 const { program } = pkg;
 
 program
@@ -7,9 +8,8 @@ program
   .action(() => {
     console.log("Hello from main action!");
   })
+  
   .command("hello", "Say hello")
-  .action(() => {
-    console.log("Hello from command!");
-  });
+  .action(helloAction);
 
 program.run()
