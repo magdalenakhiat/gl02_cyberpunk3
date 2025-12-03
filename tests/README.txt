@@ -1,0 +1,1 @@
+Ce dossier contient les fichiers de tests. Ces tests sont accomplis avec le module Jasmine.
