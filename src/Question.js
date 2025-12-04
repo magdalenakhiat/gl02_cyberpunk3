@@ -1,4 +1,4 @@
-var Question(enonce, type, matiere, auteur, reponses, reponsesCorrectes) {
+export default function Question(enonce, type, matiere, auteur, reponses, reponsesCorrectes) {
   this.enonce = enonce;
   this.type = type;
   this.matiere = matiere;
@@ -8,5 +8,5 @@ var Question(enonce, type, matiere, auteur, reponses, reponsesCorrectes) {
 }
 
 Question.prototype.estEgale = function (question) {
-	return (this.enonce === question.enonce && this.type === question.type);
-}
+  return (this.enonce === question.enonce && this.type === question.type);
+};

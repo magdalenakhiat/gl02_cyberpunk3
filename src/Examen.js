@@ -1,43 +1,41 @@
-function Examen(id) {
-    this.id = id;               // ID unique de l'examen
-    this.questions = [];        // Liste de questions
-}
-
-
-// Ajoute une question à l'examen
-Examen.prototype.ajouterQ = function(question) {
-    if (!this.contientQ(question)) {
-        this.questions.push(question);
+export default class Examen {
+    constructor(id) {
+        this.id = id;               // ID unique de l'examen
+        this.questions = [];        // Liste des questions
     }
-    return this;
-};
 
-// supp une question de l'examen 
-Examen.prototype.supprimerQ = function(question) {
-    this.questions = this.questions.filter(q => !q.estEgale(question));
-    return this;
-};
+    // Ajoute une question
+    ajouterQ(question) {
+        if (!this.contientQ(question)) {
+            this.questions.push(question);
+        }
+        return this;
+    }
 
-// vérifie si la question est deja dans l'exam
-Examen.prototype.contientQ = function(question) {
-    return this.questions.some(q => q.estEgale(question));
-};
+    // Supp une question
+    supprimerQ(question) {
+        this.questions = this.questions.filter(q => !q.estEgale(question));
+        return this;
+    }
 
-// nb de questions dans l'exam
-Examen.prototype.nbQuestions = function() {
-    return this.questions.length;
-};
+    // Vérifie que la question soit déjà dans l'exam
+    contientQ(question) {
+        return this.questions.some(q => q.estEgale(question));
+    }
 
-// aucune questions dupliquée et ente 15 et 20 questions par exam
-Examen.prototype.estValide = function() {
-    const n = this.nbQuestions();
+    //nb question
+    nbQuestions() {
+        return this.questions.length;
+    }
 
-    // Vérification des doublons avec Set sur l'énoncé
-    const uniqueCount = new Set(this.questions.map(q => q.enonce)).size;
-    const noDuplicate = (uniqueCount === n);
+    //pas de doublons
+    estValide() {
+        const n = this.nbQuestions();
 
-    // Contraintes du cahier des charges
-    return noDuplicate && n >= 15 && n <= 20;
-};
+        // on vérifie l'unicité sur l'énoncé
+        const uniqueCount = new Set(this.questions.map(q => q.enonce)).size;
+        const noDuplicate = (uniqueCount === n);
 
-module.exports = Examen;
+        return noDuplicate && n >= 15 && n <= 20;
+    }
+}
