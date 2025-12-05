@@ -46,11 +46,20 @@ GIFTParser.prototype.parse = function(data) {
         // RepCorrectes
         let repCorrectes = reponses.filter((answer) => answer[0] === '=');
         
+        if (repCorrectes.length == 0) {
+            continue; // Il doit y avoir au moins une bonne réponse
+        }
+        
         reponses = reponses.map((mot) => mot.substring(1)); // On enlève premier caractère de la réponse
         repCorrectes = repCorrectes.map((mot) => mot.substring(1));
         
         // Information qui ne sont pas contenu dans la forme simplifiée d'un GIFT
-        let type = "choix_multiple";
+        let type;
+        if (reponses.length > 2) {
+            type = "choix_multiple";
+        } else if (reponses.length === 2){
+            type = "vrai_faux";
+        }
         let mat = "inconnue";
         let auteur = "inconnu";
         
