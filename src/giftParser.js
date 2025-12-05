@@ -9,36 +9,55 @@ var GIFTParser = function () {
 
 GIFTParser.prototype.parse = function(data) {
     // On base ce parser sur la specification en ABNF du format GIFT simplifié
-    var unparsedQuestions = data.split("\n"); // Chaque ligne comporte une question
+    let unparsedQuestions = data.split("\n"); // Chaque ligne comporte une question
     for (var i=0;i<unparsedQuestions.length;i++) {
         // Regex avec trois groupes de captures : id, question et réponses
-        var splitQuestion = /^Q([^:]+):([^{]+){([^}]+)}/.exec(unparsedQuestions[i]);
+        let splitQuestion = /^Q([^:]+):([^{]+){([^}]+)}/.exec(unparsedQuestions[i]);
         if (splitQuestion === null) {
             continue;
         }
         
         // ID (N'est pas utilisé pour le constructeur de Question)
-        var id = parseInt(splitQuestion[1]);
+        let id = parseInt(splitQuestion[1]);
         
         // Texte
-        var enonc = splitQuestion[2];
+        let enonc = splitQuestion[2];
         
         // Reponses
-        var reponses = splitQuestion[3];
+        let reponses = splitQuestion[3];
         reponses = reponses.split(";"); // On sépare chaque réponse
         
+        // Cette section vérifie que chaque réponse est bien correcte (préfixe '=') ou incorrecte (préfixe '~')
+        // On peut envisager de l'intégrer dans le regex, mais cela le rendrait plus compliqué
+        let reponsesIsMalformed = false
+        for (let k=0;k<reponses.length;k++) {
+            if (reponses[k].startsWith("~") || reponses[k].startsWith("=")) {
+                continue;
+            } else {
+                reponsesIsMalformed = true;
+                break;
+            }
+        }
+        
+        if (reponsesIsMalformed) {
+            continue;
+        }
+        
         // RepCorrectes
-        var repCorrectes = reponses.filter((answer) => answer[0] === '=');
+        let repCorrectes = reponses.filter((answer) => answer[0] === '=');
         
         reponses = reponses.map((mot) => mot.substring(1)); // On enlève premier caractère de la réponse
         repCorrectes = repCorrectes.map((mot) => mot.substring(1));
         
         // Information qui ne sont pas contenu dans la forme simplifiée d'un GIFT
-        var type = "choix_multiple";
-        var mat = "inconnue";
-        var auteur = "inconnu";
+        let type = "choix_multiple";
+        let mat = "inconnue";
+        let auteur = "inconnu";
         
-        this.parsedQ.push(new Question(enonc, type, mat, auteur, reponses, repCorrectes));
+        let nquest = new Question(enonc, type, mat, auteur, reponses, repCorrectes);
+        if (nquest !== undefined && nquest instanceof Question) {
+            this.parsedQ.push(nquest);
+        }
     }
 }
 
