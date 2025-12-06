@@ -1,6 +1,6 @@
 import GIFTParser from "../src/giftParser.js";
 
-describe("Suite de tests pour le parser de GIFT", function () {
+describe("Suite de tests pour le parser de GIFT simplifié", function () {
     
     it("Parser un GIFT bien formée correctement", function () {
         var gParser = new GIFTParser();

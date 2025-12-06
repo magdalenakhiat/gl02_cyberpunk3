@@ -26,6 +26,7 @@ GIFTParser.prototype.parse = function(data) {
         // Reponses
         let reponses = splitQuestion[3];
         reponses = reponses.split(";"); // On sépare chaque réponse
+        reponses = reponses.filter((answer) => answer !== ''); // On enlève ce qui est vide
         
         // Cette section vérifie que chaque réponse est bien correcte (préfixe '=') ou incorrecte (préfixe '~')
         // On peut envisager de l'intégrer dans le regex, mais cela le rendrait plus compliqué
@@ -60,10 +61,8 @@ GIFTParser.prototype.parse = function(data) {
         } else if (reponses.length === 2){
             type = "vrai_faux";
         }
-        let mat = "inconnue";
-        let auteur = "inconnu";
         
-        let nquest = new Question(enonc, type, mat, auteur, reponses, repCorrectes);
+        let nquest = new Question(enonc, type, "", "", reponses, repCorrectes);
         if (nquest !== undefined && nquest instanceof Question) {
             this.parsedQ.push(nquest);
         }
