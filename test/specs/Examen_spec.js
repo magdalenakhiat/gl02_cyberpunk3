@@ -1,4 +1,4 @@
-import Examen from "../src/Examen.js";
+import Examen from "../../src/Examen.js";
 
 describe("Module Examen", function() {
 

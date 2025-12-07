@@ -1,4 +1,4 @@
-import GIFTParser from "../src/giftParser.js";
+import GIFTParser from "../../src/giftParser.js";
 
 describe("Suite de tests pour le parser de GIFT simplifié", function () {
     
