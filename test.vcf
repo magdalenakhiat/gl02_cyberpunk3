@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:3.0
+N:TestNom;TestPrenom;;;
+FN:TestPrenom TestNom
+EMAIL:testemailfdf.fr
+TEL:fd
+ORG:df
+END:VCARD
