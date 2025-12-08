@@ -1,4 +1,4 @@
-import User from "../src/User.js";
+import User from "../../src/User.js";
 
 describe("Module User", function() {
 

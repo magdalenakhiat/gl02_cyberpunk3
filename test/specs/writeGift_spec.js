@@ -1,7 +1,7 @@
-import GIFTParser from "../src/giftParser.js";
-import writeGIFT from "../src/writeGift.js";
-import Question from "../src/Question.js";
-import Examen from "../src/Examen.js";
+import GIFTParser from "../../src/gift_parser.js";
+import writeGIFT from "../../src/writeGift.js";
+import Question from "../../src/Question.js";
+import Examen from "../../src/Examen.js";
 
 describe("Suite de tests pour le programme de sauvegarde de GIFT simplifié", function () {
     

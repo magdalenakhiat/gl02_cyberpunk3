@@ -1,4 +1,4 @@
-import Question from "../src/Question.js";
+import Question from "../../src/Question.js";
 
 describe("Module Question", function () {
 
