@@ -26,6 +26,7 @@ export default class ProfilMenuAction extends MenuAction {
             return;
         }
 
+        // Statistiques par type
         const stats = {};
         parser.parsedQ.forEach(q => {
             stats[q.type] = (stats[q.type] || 0) + 1;
@@ -43,10 +44,24 @@ export default class ProfilMenuAction extends MenuAction {
             console.log(`  - ${type}: ${count} (${pourcentage}%)`);
         });
 
-        if (parser.categories.length > 0) {
-            console.log(`\nCategories: ${parser.categories.join(', ')}`);
+        // histogramme
+        console.log("\nHistogramme :");
+        console.log("----------------------------------------");
+
+        for (let type in stats) {
+            const n = stats[type];
+            const bar = "#".repeat(n);  // 1 # = 1 question
+            console.log(type.padEnd(15) + " : " + bar + ` (${n})`);
         }
 
+        console.log("----------------------------------------\n");
+
+        // Catégories éventuelles
+        if (parser.categories.length > 0) {
+            console.log(`Categories: ${parser.categories.join(', ')}`);
+        }
+
+        // Vérification de conformité
         const examen = new Examen('temp');
         parser.parsedQ.forEach(q => examen.ajouterQ(q));
         const conformite = examen.verifierConformite();
@@ -58,6 +73,7 @@ export default class ProfilMenuAction extends MenuAction {
             console.log('  Problemes detectes:');
             conformite.erreurs.forEach(err => console.log(`    - ${err}`));
         }
+
         console.log('========================================');
     }
 }
