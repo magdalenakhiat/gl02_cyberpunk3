@@ -25,19 +25,26 @@ export default class VisualiserMenuAction extends MenuAction {
             return;
         }
 
-        console.log(`\n${parser.parsedQ.length} question(s) trouvee(s).\n`);
+        const total = parser.parsedQ.length;
+        console.log(`\n${total} question(s) trouvee(s).`);
 
-        parser.parsedQ.forEach((q, index) => {
-            console.log(`--- Question ${index + 1} ---`);
-            console.log(`Type: ${q.type}`);
-            console.log(`Enonce: ${q.enonce}`);
-            console.log(`Reponses: ${q.reponses.join(', ')}`);
-            console.log(`Correcte(s): ${q.reponsesCorrectes.join(', ')}`);
-            console.log('');
-        });
+        const idStr = await question(`ID de la question (1-${total}): `);
+        const id = parseInt(idStr, 10);
+
+        if (isNaN(id) || id < 1 || id > total) {
+            console.log(`Erreur: ID invalide. Doit etre entre 1 et ${total}.`);
+            return;
+        }
+
+        const q = parser.parsedQ[id - 1];
+        console.log(`\n--- Question ${id} ---`);
+        console.log(`Type: ${q.type}`);
+        console.log(`Enonce: ${q.enonce}`);
+        console.log(`Reponses: ${q.reponses.join(', ')}`);
+        console.log(`Correcte(s): ${q.reponsesCorrectes.join(', ')}`);
 
         if (parser.categories.length > 0) {
-            console.log(`Categories: ${parser.categories.join(', ')}`);
+            console.log(`\nCategories: ${parser.categories.join(', ')}`);
         }
     }
 }
