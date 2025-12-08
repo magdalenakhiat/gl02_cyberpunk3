@@ -30,7 +30,7 @@ async function main() {
 
     while (continuer) {
         afficherMenu(actions);
-        const choix = await question('\nVotre choix (1-5): ');
+        const choix = await question('\nVotre choix (1-' + actions.length + '): ');
 
         const action = actions.find(a => a.id === parseInt(choix, 10));
 
@@ -40,7 +40,7 @@ async function main() {
                 continuer = false;
             }
         } else {
-            console.log('\nChoix invalide. Veuillez entrer un numero entre 1 et 5.');
+            console.log('\nChoix invalide. Veuillez entrer un numero entre 1 et ' + actions.length + '.');
         }
     }
 
