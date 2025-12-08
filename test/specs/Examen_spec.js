@@ -1,10 +1,5 @@
-<<<<<<< HEAD:spec/Examen_spec.js
-import Examen from "../src/Examen.js";
-import Question from "../src/Question.js"; 
-
-=======
 import Examen from "../../src/Examen.js";
->>>>>>> 811b4f4e774343aeaeb23530f3428fd4875bd358:test/specs/Examen_spec.js
+import Question from "../../src/Question.js";
 
 describe("Module Examen", function() {
 
