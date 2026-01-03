@@ -9,6 +9,11 @@ Outil en ligne de commande pour la gestion d'examens au format GIFT.
 - BRUN Pauline
 - MSALLEM Fatma
 
+Projet repris et maintenu par :
+- Magdalena Khiat
+- Yves Migue
+- Doniphan Lacour
+
 ## Installation
 
 ### Prerequis
