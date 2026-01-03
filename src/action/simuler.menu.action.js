@@ -7,10 +7,18 @@ export default class SimulerMenuAction extends MenuAction {
     static label = 'Simuler un examen';
 
     static async execute(rl, question) {
-        console.log('\n=== Simulation d’examen (V2 ultra simple) ===');
+        console.log('\n=== Simulation d’examen ===');
 
         const filePath = (await question('Chemin du fichier .gift : ')).trim();
-        const data = fs.readFileSync(filePath, 'utf-8');
+
+        let data;
+        try {
+            data = fs.readFileSync(filePath, 'utf-8');
+        } catch (e) {
+            console.log('\n Erreur : fichier d’examen introuvable.');
+            console.log('Veuillez vérifier le chemin du fichier GIFT.');
+            return;
+        }
 
         const parser = new GiftParser();
         parser.parse(data);
