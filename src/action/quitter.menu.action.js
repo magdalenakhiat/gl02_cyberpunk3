@@ -1,7 +1,7 @@
 import MenuAction from './MenuAction.js';
 
 export default class QuitterMenuAction extends MenuAction {
-    static id = 5;
+    static id = 6;
     static label = 'Quitter';
 
     static async execute(rl, question) {
