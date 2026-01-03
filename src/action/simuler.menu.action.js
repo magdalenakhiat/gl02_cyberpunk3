@@ -67,7 +67,7 @@ export default class SimulerMenuAction extends MenuAction {
                 continue;
             }
 
-            // Correspondance et autres : pas gérés
+            // Autre type de questions
             console.log('Type non géré : ' + q.type);
         }
 
