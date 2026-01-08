@@ -23,7 +23,11 @@
     "node": ">=14.0.0"
   },
   "dependencies": {
-    "@caporal/core": "^2.0.2"
+    "@caporal/core": "^2.0.2",
+    "canvas": "^3.2.0",
+    "vega": "^6.2.0",
+    "vega-canvas": "^2.0.0",
+    "vega-lite": "^6.4.1"
   },
   "devDependencies": {
     "c8": "^10.1.3",

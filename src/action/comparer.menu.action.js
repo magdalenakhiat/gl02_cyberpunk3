@@ -7,8 +7,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default class ComparerMenuAction extends MenuAction {
-    static id = 5;
-    static label = "Comparer les types de questions (Simple ou Global)";
+    static id = 6;
+    static label = "Comparer les profils d'examen";
 
     static estProfilValide(profil) {
         return profil && 

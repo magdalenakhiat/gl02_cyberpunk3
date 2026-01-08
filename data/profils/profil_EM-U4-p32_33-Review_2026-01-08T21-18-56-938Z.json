@@ -1,0 +1,16 @@
+{
+    "fichierSource": "C:\\Users\\yvesc\\Downloads\\sujetB_Emarelibertas_l2\\gl02_cyberpunk\\data\\EM-U4-p32_33-Review.gift",
+    "dateGeneration": "2026-01-08T21:18:56.940Z",
+    "nombreQuestions": 9,
+    "repartitionParType": {
+        "choix_multiple": 1,
+        "mot_manquant": 8
+    },
+    "categories": [],
+    "conformite": {
+        "estValide": false,
+        "erreurs": [
+            "9/15 minimum. L'examen doit contenir au moins 15 questions."
+        ]
+    }
+}

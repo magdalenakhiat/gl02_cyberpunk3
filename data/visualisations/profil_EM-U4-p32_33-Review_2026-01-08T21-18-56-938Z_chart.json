@@ -1,0 +1,38 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "description": "Répartition des questions pour C:\\Users\\yvesc\\Downloads\\sujetB_Emarelibertas_l2\\gl02_cyberpunk\\data\\EM-U4-p32_33-Review.gift",
+    "data": {
+        "values": [
+            {
+                "type": "choix_multiple",
+                "quantite": 1
+            },
+            {
+                "type": "mot_manquant",
+                "quantite": 8
+            }
+        ]
+    },
+    "mark": "bar",
+    "encoding": {
+        "x": {
+            "field": "type",
+            "type": "nominal",
+            "axis": {
+                "labelAngle": 0
+            },
+            "title": "Type de question"
+        },
+        "y": {
+            "field": "quantite",
+            "type": "quantitative",
+            "title": "Nombre de questions"
+        },
+        "color": {
+            "field": "type",
+            "type": "nominal",
+            "legend": null
+        }
+    },
+    "title": "Histogramme de l'examen"
+}

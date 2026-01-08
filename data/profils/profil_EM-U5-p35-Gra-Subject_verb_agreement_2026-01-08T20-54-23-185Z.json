@@ -1,0 +1,15 @@
+{
+    "fichierSource": "C:\\Users\\yvesc\\Downloads\\sujetB_Emarelibertas_l2\\gl02_cyberpunk\\data\\EM-U5-p35-Gra-Subject_verb_agreement.gift",
+    "dateGeneration": "2026-01-08T20:54:23.187Z",
+    "nombreQuestions": 5,
+    "repartitionParType": {
+        "vrai_faux": 5
+    },
+    "categories": [],
+    "conformite": {
+        "estValide": false,
+        "erreurs": [
+            "5/15 minimum. L'examen doit contenir au moins 15 questions."
+        ]
+    }
+}
