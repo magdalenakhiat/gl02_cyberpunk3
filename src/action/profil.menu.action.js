@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import MenuAction from './MenuAction.js';
 import GiftParser from '../gift_parser.js';
 import Examen from '../Examen.js';
@@ -75,5 +76,31 @@ export default class ProfilMenuAction extends MenuAction {
         }
 
         console.log('========================================');
+        // Génération du fichier profil
+
+        const outputDir = 'data/profils';
+
+        if (!fs.existsSync(outputDir)) {
+            fs.mkdirSync(outputDir, { recursive: true });
+        }
+
+        const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const baseName = path.basename(filePath, path.extname(filePath));
+        const outputFile = `${outputDir}/profil_${baseName}_${timestamp}.json`;
+
+        const profil = {
+            fichierSource: filePath,
+            dateGeneration: new Date().toISOString(),
+            nombreQuestions: parser.parsedQ.length,
+            repartitionParType: stats,
+            categories: parser.categories,
+            conformite: conformite
+        };
+
+        fs.writeFileSync(outputFile, JSON.stringify(profil, null, 4), 'utf-8');
+
+        console.log('\nProfil sauvegarde avec succes :');
+        console.log(`  ${outputFile}`);
+
     }
 }
