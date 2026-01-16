@@ -75,8 +75,56 @@ while (true) {
             return;
         }
 
+//correction
+console.log("\nSélection manuelle des questions :");
+console.log("Indiquez le chemin du fichier GIFT et l’index de la question.\n");
 
-        const uniques = new Map();
+let ajoutCount = 0;
+
+while (ajoutCount < nb) {
+    console.log(`Question ${ajoutCount + 1} / ${nb}`);
+
+    const giftPath = await question(
+        "Chemin du fichier GIFT (ex: data/U001.gift) : "
+    );
+
+    if (!fs.existsSync(giftPath)) {
+        console.log(" Fichier introuvable.\n");
+        continue;
+    }
+
+    const raw = fs.readFileSync(giftPath, 'utf-8');
+    const parser = new GiftParser();
+    parser.parse(raw);
+
+    if (parser.parsedQ.length === 0) {
+        console.log(" Aucune question trouvée dans ce fichier.\n");
+        continue;
+    }
+
+    console.log(`→ ${parser.parsedQ.length} question(s) disponible(s) :`);
+    parser.parsedQ.forEach((q, i) => {
+        console.log(`  [${i}] ${q.enonce.substring(0, 60)}...`);
+    });
+
+    const indexStr = await question(
+        "Index de la question à ajouter : "
+    );
+    const index = parseInt(indexStr);
+
+    if (isNaN(index) || index < 0 || index >= parser.parsedQ.length) {
+        console.log("Index invalide.\n");
+        continue;
+    }
+
+    const selectedQuestion = parser.parsedQ[index];
+    examen.ajouterQ(selectedQuestion);
+
+    console.log("Question ajoutée.\n");
+    ajoutCount++;
+}
+
+        /*const uniques = new Map();
         while (uniques.size < nb) {
             const q = banqueQuestions[Math.floor(Math.random() * banqueQuestions.length)];
             uniques.set(q.enonce, q);
@@ -85,7 +133,7 @@ while (true) {
 
         // Ajout des questions dans l'examen
         selection.forEach(q => examen.ajouterQ(q));
-
+*/
         // Vérification après ajout
         const rep = examen.verifierConformite();
         if (!rep.estValide) {
