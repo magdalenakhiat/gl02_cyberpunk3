@@ -76,53 +76,100 @@ while (true) {
         }
 
 //correction
-console.log("\nSélection manuelle des questions :");
-console.log("Indiquez le chemin du fichier GIFT et l’index de la question.\n");
+console.log("\nAjout manuel des questions");
+console.log("→ Chemin GIFT ou commande /search\n");
 
-let ajoutCount = 0;
+// Fonction utilitaire : recherche de questions
+async function searchQuestions(banqueQuestions, question) {
+    const keyword = await question("Mot-clé à rechercher : ");
+    const limitStr = await question("Nombre max de résultats : ");
+    const limit = parseInt(limitStr) || 10;
 
-while (ajoutCount < nb) {
-    console.log(`Question ${ajoutCount + 1} / ${nb}`);
-
-    const giftPath = await question(
-        "Chemin du fichier GIFT (ex: data/U001.gift) : "
+    const results = banqueQuestions.filter(q =>
+        q.enonce.toLowerCase().includes(keyword.toLowerCase())
     );
 
-    if (!fs.existsSync(giftPath)) {
-        console.log(" Fichier introuvable.\n");
-        continue;
+    if (results.length === 0) {
+        console.log("Aucune question trouvée.\n");
+        return null;
     }
 
-    const raw = fs.readFileSync(giftPath, 'utf-8');
+    results.slice(0, limit).forEach((q, i) => {
+        console.log(`[${i}] ${q.enonce.substring(0, 80)}...`);
+    });
+
+    const indexStr = await question("Index de la question à ajouter : ");
+    const index = parseInt(indexStr);
+
+    if (isNaN(index) || index < 0 || index >= results.length) {
+        console.log("Index invalide.\n");
+        return null;
+    }
+
+    return results[index];
+}
+
+// Fonction utilitaire : parser un fichier GIFT
+function parseGiftFile(filePath) {
+    const fullPath = path.resolve(filePath);
+    if (!fs.existsSync(fullPath)) return null;
+
+    const raw = fs.readFileSync(fullPath, 'utf-8');
     const parser = new GiftParser();
     parser.parse(raw);
 
-    if (parser.parsedQ.length === 0) {
-        console.log(" Aucune question trouvée dans ce fichier.\n");
+    if (parser.parsedQ.length === 0) return null;
+    return parser.parsedQ;
+}
+
+// Ajout des questions
+let ajoutCount = 0;
+while (ajoutCount < nb) {
+    console.log(`Question ${ajoutCount + 1} / ${nb}`);
+    const input = await question("Chemin du fichier GIFT ou /search : ");
+
+    // MODE RECHERCHE
+    if (input === "/search") {
+        const q = await searchQuestions(banqueQuestions, question);
+        if (q && !examen.questions.some(qq => qq.enonce === q.enonce)) {
+            examen.ajouterQ(q);
+            console.log("Question ajoutée via recherche.\n");
+            ajoutCount++;
+        } else if (q) {
+            console.log("Question déjà ajoutée.\n");
+        }
         continue;
     }
 
-    console.log(`→ ${parser.parsedQ.length} question(s) disponible(s) :`);
-    parser.parsedQ.forEach((q, i) => {
-        console.log(`  [${i}] ${q.enonce.substring(0, 60)}...`);
+    // MODE FICHIER
+    const parsedQuestions = parseGiftFile(input);
+    if (!parsedQuestions) {
+        console.log("Fichier introuvable ou aucune question.\n");
+        continue;
+    }
+
+    parsedQuestions.forEach((q, i) => {
+        console.log(`[${i}] ${q.enonce.substring(0, 60)}...`);
     });
 
-    const indexStr = await question(
-        "Index de la question à ajouter : "
-    );
+    const indexStr = await question("Index de la question à ajouter : ");
     const index = parseInt(indexStr);
-
-    if (isNaN(index) || index < 0 || index >= parser.parsedQ.length) {
+    if (isNaN(index) || index < 0 || index >= parsedQuestions.length) {
         console.log("Index invalide.\n");
         continue;
     }
 
-    const selectedQuestion = parser.parsedQ[index];
-    examen.ajouterQ(selectedQuestion);
-
-    console.log("Question ajoutée.\n");
-    ajoutCount++;
+    const newQ = parsedQuestions[index];
+    if (!examen.questions.some(q => q.enonce === newQ.enonce)) {
+        examen.ajouterQ(newQ);
+        console.log("Question ajoutée.\n");
+        ajoutCount++;
+    } else {
+        console.log("Question déjà ajoutée.\n");
+    }
 }
+
+
 
         /*const uniques = new Map();
         while (uniques.size < nb) {
@@ -132,8 +179,8 @@ while (ajoutCount < nb) {
         const selection = Array.from(uniques.values());
 
         // Ajout des questions dans l'examen
-        selection.forEach(q => examen.ajouterQ(q));
-*/
+        selection.forEach(q => examen.ajouterQ(q));*/
+
         // Vérification après ajout
         const rep = examen.verifierConformite();
         if (!rep.estValide) {
